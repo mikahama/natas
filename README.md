@@ -1,3 +1,5 @@
+# NATAS
+
 This library will have methods for processing historical English corpora, especially for studying neologisms. The first functionalities to be released relate to normalization of historical spelling and OCR post-correction.
 
 **NOTE: The normalization methods depend on Spacy, which takes some time to load. If you want to speed this up, you can change the Spacy model in use**
@@ -9,21 +11,21 @@ This library will have methods for processing historical English corpora, especi
 For a list of non-modern spelling variants, the tool can produce an ordered list of the candidate normalizations. The candidates are ordered based on the prediction score of the NMT model.
 
     import natas
-    print(natas.normalize_words(["seacreat", "wiþe"]))
+    natas.normalize_words(["seacreat", "wiþe"])
     >> [['secret', 'secrete'], ['with', 'withe', 'wide', 'white', 'way']]
 
 Possible keyword arguments are n_best=10, dictionary=None, all_candidates=True. 
 - *n_best* sets the number of candidates the NMT will output
 - *dictionary* sets a custom dictionary to be used to filter the NMT output (see more in the next section)
-- *all_candidates*, if False, the method will return only the top first normalization candidate (this will improve the speed of the method)
+- *all_candidates*, if False, the method will return only the topmost normalization candidate (this will improve the speed of the method)
 
 ## Check if a word is correctly spelled
 
 You can check whether a word is correctly spelled easily
 
     import natas
-    print(natas.is_correctly_spelled("cat"))
-    print(natas.is_correctly_spelled("ca7"))
+    natas.is_correctly_spelled("cat")
+    natas.is_correctly_spelled("ca7")
     >> True
     >> False
 
