@@ -68,7 +68,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=["configargparse", "spacy", "mikatools>=0.0.6","OpenNMT-py>=0.8.2 @ https://github.com/OpenNMT/OpenNMT-py/archive/0.8.2.zip"],
+    install_requires=["configargparse", "spacy", "mikatools>=0.0.6","OpenNMT-py>=0.8.2 @ https://github.com/OpenNMT/OpenNMT-py/archive/0.8.2.zip", "en-core-web-md>=2.0.0 @ https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.0.0/en_core_web_md-2.0.0.tar.gz"],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
@@ -80,7 +80,7 @@ setup(
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
     package_data={
-        'natas': ['models/*.pt'],
+        'natas': ['models/*.pt', "wiktionary_lemmas.json"],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
