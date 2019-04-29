@@ -113,9 +113,9 @@ def _give_model(name):
 	return models[name]
 
 def _split_words(words):
-	return [" ".join(x) for x in words]
+	return [" ".join(x.lower()) for x in words]
 
-def _normalize(words, model_name, n_best=10, dictionary=None,all_candidates=True):
+def _normalize(words, model_name, n_best=10, dictionary=None, all_candidates=True):
 	#Adapted code from OpenNMT translate.py
 	if dictionary is None:
 		dictionary = wiktionary

@@ -1,3 +1,6 @@
-from natas import normalize_words
+import natas
 
-print(normalize_words(["seacreat", "wiþe"]))
+print(natas.normalize_words(["seacreat", "wiþe", "Dogge"]))
+
+print(natas.is_correctly_spelled("cat"))
+print(natas.is_correctly_spelled("ca7"))
