@@ -116,6 +116,7 @@ def _split_words(words):
 	return [" ".join(x) for x in words]
 
 def _normalize(words, model_name, n_best=10, dictionary=None,all_candidates=True):
+	#Adapted code from OpenNMT translate.py
 	if dictionary is None:
 		dictionary = wiktionary
 	stream = fake_stream()
