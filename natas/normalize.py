@@ -1,5 +1,4 @@
 from mikatools import script_path, json_load
-import torch
 from onmt.translate.translator import Translator
 from onmt.decoders.ensemble import load_test_model
 from onmt.translate import GNMTGlobalScorer

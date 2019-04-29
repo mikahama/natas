@@ -43,5 +43,3 @@ If you want to replace the Wiktionary dictionary with another one, it can be pas
     natas.normalize_words(["ratte"], dictionary=my_dictionary)
 
 
-
-sudo pip3 install https://github.com/OpenNMT/OpenNMT-py/archive/0.8.2.zip
