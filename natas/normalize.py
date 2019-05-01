@@ -6,7 +6,10 @@ from itertools import islice, repeat
 import configargparse as cfargparse
 import spacy
 
-wiktionary = [x.lower() for x in json_load(script_path("wiktionary_lemmas.json"))]
+
+wiktionary = set([x.lower() for x in json_load(script_path("wiktionary_lemmas.json"))])
+
+is_in_data_cache = {}
 
 def set_spacy(nlp):
 	models["spacy"] = nlp
@@ -31,28 +34,35 @@ def split_corpus(f, shard_size):
 
 models = {}
 
-def is_in_dictionary(word, oed, spacy_nlp):
+def is_in_dictionary(word, oed, spacy_nlp, cache=True):
+	if cache and word in is_in_data_cache:
+		return is_in_data_cache[word]
 	if word in oed:
+		is_in_data_cache[word] = True
 		return True
 	try:
 		res = spacy_nlp(word)
 		if len(res) > 1:
+			is_in_data_cache[word] = False
 			return False
 		lemma = res[0].lemma_
 	except:
+		is_in_data_cache[word] = False
 		return False
 	if lemma in oed:
+		is_in_data_cache[word] = True
 		return True
+	is_in_data_cache[word] = False
 	return False
 
-def _dict_filter(results, dictionary, all_candidates=True):
+def _dict_filter(results, dictionary, all_candidates=True, correct_spelling_cache=True):
 	output = []
 	nlp = _get_spacy()
 	for word in results:
 		cor = []
 		for candidate in word:
 			candidate = candidate.replace(" ", "")
-			if is_in_dictionary(candidate, dictionary, nlp):
+			if is_in_dictionary(candidate, dictionary, nlp, correct_spelling_cache):
 				cor.append(candidate)
 				if not all_candidates:
 					break
@@ -114,7 +124,7 @@ def _give_model(name):
 def _split_words(words):
 	return [" ".join(x.lower()) for x in words]
 
-def _normalize(words, model_name, n_best=10, dictionary=None, all_candidates=True):
+def _normalize(words, model_name, n_best=10, dictionary=None, all_candidates=True, correct_spelling_cache=True):
 	#Adapted code from OpenNMT translate.py
 	if dictionary is None:
 		dictionary = wiktionary
@@ -138,6 +148,6 @@ def _normalize(words, model_name, n_best=10, dictionary=None, all_candidates=Tru
 			attn_debug=opt.attn_debug
 			)
 	res = _parse_fake_stream(stream, n_best)
-	return _dict_filter(res, dictionary,all_candidates=all_candidates)
+	return _dict_filter(res, dictionary,all_candidates=all_candidates, correct_spelling_cache=correct_spelling_cache)
 
 
