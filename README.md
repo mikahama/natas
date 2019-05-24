@@ -6,6 +6,8 @@ This library will have methods for processing historical English corpora, especi
 
 ## Installation
 
+Note: It is highly recommended to use a virtual environment because of the strict version requirements for dependencies
+
     sudo pip3 install natas --process-dependency-links --allow-all-external 
     spacy download en_core_web_md
 
