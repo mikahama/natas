@@ -4,7 +4,6 @@ This library will have methods for processing historical English corpora, especi
 
 **NOTE: The normalization methods depend on Spacy, which takes some time to load. If you want to speed this up, you can change the Spacy model in use**
 
-**NOTE: this library is not functional yet**
 
 ## Historical normalization
 
