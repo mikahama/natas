@@ -9,7 +9,7 @@ This library will have methods for processing historical English corpora, especi
 Note: It is highly recommended to use a virtual environment because of the strict version requirements for dependencies
 
     sudo pip3 install natas --process-dependency-links --allow-all-external 
-    spacy download en_core_web_md
+    spacy download en_core_web_md #this step is optional, it's only needed if spacy was updated
 
 ## Historical normalization
 
