@@ -50,3 +50,8 @@ By default, caching is enabled. If you want to use the method with multiple diff
     natas.is_correctly_spelled("cat") #The result will be served from the cache
     natas.is_correctly_spelled("cat", cache=False) #The word will be looked up again
 
+# Cite
+
+If you use the library, please cite  the following publication
+
+Mika Hämäläinen, Tanja Säily, Jack Rueter, Jörg Tiedemann, and Eetu Mäkelä. 2019. Revisiting NMT for Normalization of Early English Letters. In *Proceedings of the 3rd Joint SIGHUM Workshop on Computational Linguistics for Cultural Heritage, Social Sciences, Humanities and Literature*.
