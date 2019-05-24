@@ -4,6 +4,10 @@ This library will have methods for processing historical English corpora, especi
 
 **NOTE: The normalization methods depend on Spacy, which takes some time to load. If you want to speed this up, you can change the Spacy model in use**
 
+## Installation
+
+    sudo pip3 install natas --process-dependency-links --allow-all-external 
+    spacy download en_core_web_md
 
 ## Historical normalization
 
