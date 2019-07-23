@@ -7,9 +7,10 @@ import configargparse as cfargparse
 import spacy
 
 
+
 wiktionary = set([x.lower() for x in json_load(script_path("wiktionary_lemmas.json"))])
 
-is_in_data_cache = {}
+is_in_data_cache = {"ceec_eng":{}, "ocr_fin":{}}
 
 def set_spacy(nlp):
 	models["spacy"] = nlp
@@ -34,25 +35,28 @@ def split_corpus(f, shard_size):
 
 models = {}
 
-def is_in_dictionary(word, oed, spacy_nlp, cache=True):
+def is_in_dictionary(word, correct_lemmas, spacy_nlp, cache=True, cache_name="ceec_eng", lemmatize=True):
 	if cache and word in is_in_data_cache:
-		return is_in_data_cache[word]
-	if word in oed:
-		is_in_data_cache[word] = True
+		return is_in_data_cache["ceec_eng"][word]
+	if word in correct_lemmas:
+		is_in_data_cache["ceec_eng"][word] = True
 		return True
+	if not lemmatize:
+		is_in_data_cache["ceec_eng"][word] = False
+		return False
 	try:
 		res = spacy_nlp(word)
 		if len(res) > 1:
-			is_in_data_cache[word] = False
+			is_in_data_cache["ceec_eng"][word] = False
 			return False
 		lemma = res[0].lemma_
 	except:
-		is_in_data_cache[word] = False
+		is_in_data_cache["ceec_eng"][word] = False
 		return False
-	if lemma in oed:
-		is_in_data_cache[word] = True
+	if lemma in correct_lemmas:
+		is_in_data_cache["ceec_eng"][word] = True
 		return True
-	is_in_data_cache[word] = False
+	is_in_data_cache["ceec_eng"][word] = False
 	return False
 
 def _dict_filter(results, dictionary, all_candidates=True, correct_spelling_cache=True):
