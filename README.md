@@ -34,7 +34,7 @@ You can use our pretrained model for OCR post correction by doing the following
     natas.ocr_correct_words(["paft", "friendlhip"])
     >> [['past', 'pall', 'part', 'part'], ['friendship']]
 
-This will return a list of possible correction candidates in the order of propability according to the NMT model. The same parameters can be used as for historical text normalization.
+This will return a list of possible correction candidates in the order of probability according to the NMT model. The same parameters can be used as for historical text normalization.
 
 ### Training your own OCR error correction model
 
@@ -65,7 +65,7 @@ You can extract the parallel data for the OCR model if you have an access to a w
         "pratical": 4
     }}
 
-The code results in a dictionary of correctly spelled English words (from *seed_words*) and their mapping to semantically similar non-correctly spelled words (not in *dictionary*). Each non-correct word has a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) calculated with the correctly spelled word. In our paper, we used 3 as the maximum accepted edit distance.
+The code results in a dictionary of correctly spelled English words (from *seed_words*) and their mapping to semantically similar non-correctly spelled words (not in *dictionary*). Each non-correct word has a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) calculated with the correctly spelled word. In our paper, we used 3 as the maximum edit distance.
 
 Use the dictionary to make parallel data files for OpenNMT on a character level. This means splitting the words into letters, such as *l o g i c k* -> *l o g i c*. See [their documentation on how to train the model](https://github.com/OpenNMT/OpenNMT-py).
 
