@@ -26,6 +26,12 @@ def extract_parallel(seed_words, model, dictionary=wiktionary, lemmatize=True, u
 			res[correct].update(errors[correct])
 	return res
 
+def get_wv_normalization(word, model, dictionary, lemmatize=True, cache=True, cache_name="ocr"):
+	res = get_ocr_error_dict(word,model, dictionary, lemmatize=lemmatize, cache=cache, cache_name=cache_name)
+	for key, value in res.iteritems():
+		if word in value and value[word] < 4:
+			return key
+	return ""
 
 def get_ocr_error_dict(word, model, dictionary, lemmatize=True, cache=True, cache_name="ocr"):
 	ocr_errors = []
@@ -41,8 +47,6 @@ def get_ocr_error_dict(word, model, dictionary, lemmatize=True, cache=True, cach
 		return []
 
 	for pot_ocr_error in pot_ocr_errors:
-		#print(pot_ocr_error)
-		#print(is_in_dictionary(pot_ocr_error, dictionary, spacy_nlp, cache=cache, cache_name=cache_name,lemmatize=lemmatize))
 		pot_ocr_error = pot_ocr_error[0]
 		if not is_in_dictionary(pot_ocr_error, dictionary, spacy_nlp, cache=cache, cache_name=cache_name,lemmatize=lemmatize):
 			ocr_errors.append(pot_ocr_error)
