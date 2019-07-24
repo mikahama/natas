@@ -1,0 +1,1 @@
+Starting from version 1.0.1, due to size limits, the models are no longer distributed through pypi, but they need to be downloaded with python3 -m natas.download

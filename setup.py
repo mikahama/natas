@@ -27,6 +27,7 @@ setup(
 
     description='Python library for processing historical English',
     long_description=long_description,
+    long_description_content_type='text/markdown',
 
     # The project's main homepage.
     url='https://github.com/mikahama/natas',
@@ -80,7 +81,7 @@ setup(
     # installed, specify them here.  If using Python 2.6 or less, then these
     # have to be included in MANIFEST.in as well.
     package_data={
-        'natas': ['models/*.pt', "wiktionary_lemmas.json"],
+        'natas': ['models/*.txt', "wiktionary_lemmas.json"],
     },
 
     # Although 'package_data' is the preferred approach, in some case you may
