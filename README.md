@@ -111,4 +111,4 @@ Mika Hämäläinen, Tanja Säily, Jack Rueter, Jörg Tiedemann, and Eetu Ma
 
 ## OCR correction
 
-Mika Hämäläinen, and Simon Hengchen. 2019. [From the Paft to the Fiiture: a Fully Automatic NMT and Word Embeddings Method for OCR Post-Correction](https://helda.helsinki.fi//bitstream/handle/10138/305149/SN_Mika_Simon_5_.pdf?sequence=1). In *Proceedings of the International Conference Recent Advances in Natural Language Processing, RANLP 2019*.
+Mika Hämäläinen, and Simon Hengchen. 2019. [From the Paft to the Fiiture: a Fully Automatic NMT and Word Embeddings Method for OCR Post-Correction](https://helda.helsinki.fi//bitstream/handle/10138/305149/SN_Mika_Simon_5_.pdf?sequence=1). In *the Proceedings of Recent Advances in Natural Language Processing*.
