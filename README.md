@@ -11,7 +11,7 @@ Note: It is highly recommended to use a virtual environment because of the stric
     pip3 --no-cache-dir install pip==18.1
     pip3 install natas --process-dependency-links
     python3 -m natas.download
-    python3 - m spacy download en_core_web_md #this step is optional, it's only needed if spacy was updated
+    python3 - m spacy download en_core_web_md
 
 ## Historical normalization
 
