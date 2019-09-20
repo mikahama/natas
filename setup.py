@@ -23,7 +23,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0.2',
+    version='1.0.3',
 
     description='Python library for processing historical English',
     long_description=long_description,
@@ -69,8 +69,8 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=["configargparse","distance", "torch==1.0.0", "torchtext>=0.4.0@https://mikakalevi.com/downloads/text-master.zip#egg=torchtext-0.4.0", "spacy>=2.1.4", "mikatools>=0.0.6",r"OpenNMT-py>=0.8.2@https://github.com/OpenNMT/OpenNMT-py/archive/0.8.2.zip#egg=OpenNMT-py-0.8.2", r"en_core_web_md>=2.1.0@https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.1.0/en_core_web_md-2.1.0.tar.gz"],
-    dependency_links=["https://mikakalevi.com/downloads/text-master.zip#egg=torchtext-0.4.0","https://github.com/OpenNMT/OpenNMT-py/archive/0.8.2.zip#egg=OpenNMT-py-0.8.2", "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.1.0/en_core_web_md-2.1.0.tar.gz"],
+    install_requires=["configargparse","distance", "torch==1.0.0", "torchtext>=0.4.0@https://mikakalevi.com/downloads/text-master.zip#egg=torchtext-0.4.0", "spacy>=2.1.4", "mikatools>=0.0.6",r"OpenNMT-py>=0.8.2@https://github.com/OpenNMT/OpenNMT-py/archive/0.8.2.zip#egg=OpenNMT-py-0.8.2", r"en_core_web_md>=2.1.0@https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.1.0/en_core_web_md-2.1.0.tar.gz#egg=en_core_web_md-2.1.0"],
+    dependency_links=["https://mikakalevi.com/downloads/text-master.zip#egg=torchtext-0.4.0","https://github.com/OpenNMT/OpenNMT-py/archive/0.8.2.zip#egg=OpenNMT-py-0.8.2", "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-2.1.0/en_core_web_md-2.1.0.tar.gz#egg=en_core_web_md-2.1.0"],
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
     # for example:
