@@ -5,7 +5,7 @@ from onmt.translate import GNMTGlobalScorer
 from itertools import islice, repeat
 import configargparse as cfargparse
 import spacy
-
+import os
 
 
 wiktionary = set([x.lower() for x in json_load(script_path("wiktionary_lemmas.json"))])
@@ -116,7 +116,10 @@ def _default_kwargs(words=None,n_best=10):
 
 
 def _load_model(name):
-	opt = opennmt_opts(script_path("models/" + name), **_default_kwargs())
+	model_path = script_path("models/" + name)
+	if not os.path.exists(model_path):
+		model_path = name
+	opt = opennmt_opts(model_path, **_default_kwargs())
 	m = load_test_model(opt)
 	models[name] = m
 
@@ -128,13 +131,11 @@ def _give_model(name):
 def _split_words(words):
 	return [" ".join(x.lower()) for x in words]
 
-def _normalize(words, model_name, n_best=10, dictionary=None, all_candidates=True, correct_spelling_cache=True):
+def call_onmt(words, model_name, n_best=10):
 	#Adapted code from OpenNMT translate.py
-	if dictionary is None:
-		dictionary = wiktionary
+
 	stream = fake_stream()
 	fields, model, model_opt = _give_model(model_name)
-	words = _split_words(words)
 	opt = opennmt_opts("", **_default_kwargs(words,n_best))
 	scorer = GNMTGlobalScorer.from_opt(opt)
 	t = Translator.from_opt(model, fields, opt, model_opt, global_scorer=scorer, out_file=stream, report_score=False)
@@ -152,6 +153,12 @@ def _normalize(words, model_name, n_best=10, dictionary=None, all_candidates=Tru
 			attn_debug=opt.attn_debug
 			)
 	res = _parse_fake_stream(stream, n_best)
+	return res
+
+def _normalize(words, model_name, n_best=10, dictionary=None, all_candidates=True, correct_spelling_cache=True):
+	res = call_onmt(_split_words(words), model_name, n_best=n_best)
+	if dictionary is None:
+		dictionary = wiktionary	
 	return _dict_filter(res, dictionary,all_candidates=all_candidates, correct_spelling_cache=correct_spelling_cache)
 
 
