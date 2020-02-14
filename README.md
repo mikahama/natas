@@ -109,6 +109,39 @@ If you use the library, please cite one of the following publications depending 
 
 Mika Hämäläinen, Tanja Säily, Jack Rueter, Jörg Tiedemann, and Eetu Mäkelä. 2019. [Revisiting NMT for Normalization of Early English Letters](https://www.aclweb.org/anthology/papers/W/W19/W19-2509/). In *Proceedings of the 3rd Joint SIGHUM Workshop on Computational Linguistics for Cultural Heritage, Social Sciences, Humanities and Literature*.
 
+    @inproceedings{hamalainen-etal-2019-revisiting,
+    title = "Revisiting {NMT} for Normalization of Early {E}nglish Letters",
+    author = {H{\"a}m{\"a}l{\"a}inen, Mika  and
+      S{\"a}ily, Tanja  and
+      Rueter, Jack  and
+      Tiedemann, J{\"o}rg  and
+      M{\"a}kel{\"a}, Eetu},
+    booktitle = "Proceedings of the 3rd Joint {SIGHUM} Workshop on Computational Linguistics for Cultural Heritage, Social Sciences, Humanities and Literature",
+    month = jun,
+    year = "2019",
+    address = "Minneapolis, USA",
+    publisher = "Association for Computational Linguistics",
+    url = "https://www.aclweb.org/anthology/W19-2509",
+    doi = "10.18653/v1/W19-2509",
+    pages = "71--75",
+    abstract = "This paper studies the use of NMT (neural machine translation) as a normalization method for an early English letter corpus. The corpus has previously been normalized so that only less frequent deviant forms are left out without normalization. This paper discusses different methods for improving the normalization of these deviant forms by using different approaches. Adding features to the training data is found to be unhelpful, but using a lexicographical resource to filter the top candidates produced by the NMT model together with lemmatization improves results.",
+    }
+
 ## OCR correction
 
-Mika Hämäläinen, and Simon Hengchen. 2019. [From the Paft to the Fiiture: a Fully Automatic NMT and Word Embeddings Method for OCR Post-Correction](https://helda.helsinki.fi//bitstream/handle/10138/305149/SN_Mika_Simon_5_.pdf?sequence=1). In *the Proceedings of Recent Advances in Natural Language Processing*.
+Mika Hämäläinen, and Simon Hengchen. 2019. [From the Paft to the Fiiture: a Fully Automatic NMT and Word Embeddings Method for OCR Post-Correction](https://www.aclweb.org/anthology/R19-1051/). In *the Proceedings of Recent Advances in Natural Language Processing*.
+
+    @inproceedings{hamalainen-hengchen-2019-paft,
+    title = "From the Paft to the Fiiture: a Fully Automatic {NMT} and Word Embeddings Method for {OCR} Post-Correction",
+    author = {H{\"a}m{\"a}l{\"a}inen, Mika  and
+      Hengchen, Simon},
+    booktitle = "Proceedings of the International Conference on Recent Advances in Natural Language Processing (RANLP 2019)",
+    month = sep,
+    year = "2019",
+    address = "Varna, Bulgaria",
+    publisher = "INCOMA Ltd.",
+    url = "https://www.aclweb.org/anthology/R19-1051",
+    doi = "10.26615/978-954-452-056-4_051",
+    pages = "431--436",
+    abstract = "A great deal of historical corpora suffer from errors introduced by the OCR (optical character recognition) methods used in the digitization process. Correcting these errors manually is a time-consuming process and a great part of the automatic approaches have been relying on rules or supervised machine learning. We present a fully automatic unsupervised way of extracting parallel data for training a character-based sequence-to-sequence NMT (neural machine translation) model to conduct OCR error correction.",
+    }
