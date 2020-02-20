@@ -7,8 +7,11 @@ import configargparse as cfargparse
 import spacy
 import os
 
-
-wiktionary = set([x.lower() for x in json_load(script_path("wiktionary_lemmas.json"))])
+try:
+	wiktionary = set([x.lower() for x in json_load(script_path("wiktionary_lemmas.json"))])
+except:
+	print("run python -m natas.download")
+	wiktionary = []
 
 is_in_data_cache = {"ceec_eng":{}, "ocr_fin":{}}
 
