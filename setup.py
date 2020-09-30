@@ -23,7 +23,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0.5',
+    version='1.0.6',
 
     description='Python library for processing historical English',
     long_description=long_description,
@@ -33,8 +33,8 @@ setup(
     url='https://github.com/mikahama/natas',
 
     # Author details
-    author='Mika Hämäläinen, Dept. of  Digital Humanities, University of Helsinki',
-    author_email='mika.hamalainen@helsinki.fi',
+    author='Mika Hämäläinen, Rootroo Ltd',
+    author_email='mika@rootroo.com',
 
     # Choose your license
     license='Apache License, Version 2.0',
@@ -69,7 +69,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=["configargparse","distance", "spacy>=2.1.4", "mikatools>=0.0.6","OpenNMT-py>=0.8.2"],
+    install_requires=["configargparse","distance", "spacy>=2.1.4", "mikatools>=0.0.6","OpenNMT-py==1.0.0", "torch==1.2"],
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
     # for example:
