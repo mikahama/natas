@@ -49,7 +49,7 @@ You can extract the parallel data for the OCR model if you have an access to a w
     dictionary = wiktionary #Lemmas of the English Wiktionary, you will need to change this if working with any other language
     lemmatize = True #Uses Spacy with English model, use natas.set_spacy(nlp) for other models and languages
 
-    results = ocr_builder.extract_parallel(seed_words, model, dictionary=dictionary, lemmatize=lemmatize)
+    results = ocr_builder.extract_parallel(seed_words, model, dictionary=dictionary, lemmatize=lemmatize, use_freq=False)
     >> {"logic": {
         "fyle": 5, 
         "ityle": 5, 
