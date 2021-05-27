@@ -69,7 +69,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=["configargparse","distance", "spacy>=2.1.4", "mikatools>=0.0.6","OpenNMT-py==1.0.0", "torch==1.2"],
+    install_requires=["configargparse","distance", "spacy>=2.1.4", "mikatools>=0.0.6","OpenNMT-py>=2.1.2"],
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
     # for example:

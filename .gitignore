@@ -1,1 +1,4 @@
 natas.egg-info
+build/*
+dist/*
+natas/__pycache__/*

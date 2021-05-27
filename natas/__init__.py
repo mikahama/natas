@@ -5,10 +5,10 @@ from .ocr_builder import get_wv_normalization
 class W2VException(Exception):
 	pass
 
-def normalize_words(words, n_best=10, dictionary=None, all_candidates=True, correct_spelling_cache=True):
+def normalize_words(words, n_best=5, dictionary=None, all_candidates=True, correct_spelling_cache=True):
 	return _normalize(words, "normalization.pt", n_best=n_best, dictionary=dictionary, all_candidates=all_candidates,correct_spelling_cache=correct_spelling_cache)
 
-def ocr_correct_words(words, n_best=10, dictionary=None, all_candidates=True, hybrid=False, hybrid_w2v_model=None,correct_spelling_cache=True):
+def ocr_correct_words(words, n_best=5, dictionary=None, all_candidates=True, hybrid=False, hybrid_w2v_model=None,correct_spelling_cache=True):
 	if hybrid is True and hybrid_w2v_model is None:
 		raise W2VException("W2V model not specified")
 	norms = _normalize(words, "ocr.pt", n_best=n_best, dictionary=dictionary, all_candidates=all_candidates,correct_spelling_cache=correct_spelling_cache)

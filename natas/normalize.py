@@ -1,6 +1,6 @@
 from mikatools import script_path, json_load
 from onmt.translate.translator import Translator
-from onmt.decoders.ensemble import load_test_model
+from onmt.model_builder import load_test_model
 from onmt.translate import GNMTGlobalScorer
 from itertools import islice, repeat
 import configargparse as cfargparse
@@ -106,7 +106,7 @@ def _chunks(l, n):
     n = max(1, n)
     return [l[i:i+n] for i in range(0, len(l), n)]
 
-def _parse_fake_stream(stream,n_best=10):
+def _parse_fake_stream(stream,n_best=5):
 	parts = stream.get_lines()
 	k = n_best + 1
 	del parts[k-1::k]
@@ -114,8 +114,8 @@ def _parse_fake_stream(stream,n_best=10):
 
 
 
-def _default_kwargs(words=None,n_best=10):
-	return {"fp32":False,"avg_raw_probs":False,"src_dir":"","batch_size":30,"attn_debug":False,"src":words,"tgt":None,"alpha":0.0,"beta":-0.0,"length_penalty":"none","coverage_penalty":"none","gpu":-1,"n_best":n_best,"min_length":0,"max_length":100,"ratio":-0.0,"beam_size":5,"random_sampling_topk":1,"random_sampling_temp":1.0,"stepwise_penalty":False,"dump_beam":"","block_ngram_repeat":0,"ignore_when_blocking":[],"replace_unk":True,"phrase_table":"","data_type":"text","verbose":False,"report_bleu":False,"report_rouge":False,"report_time":False,"seed":829,"shard_size":0}
+def _default_kwargs(words=None,n_best=5):
+	return {"tgt_prefix":False,"fp32":False,"int8":False, "ban_unk_token":False, "random_sampling_topp":1.0,"avg_raw_probs":False,"batch_size":30,"attn_debug":False,"src":words,"tgt":None,"alpha":0.0,"beta":-0.0,"length_penalty":"none","coverage_penalty":"none","gpu":-1,"n_best":n_best,"min_length":0,"max_length":100,"ratio":-0.0,"beam_size":5,"random_sampling_topk":-1,"random_sampling_temp":1.0,"stepwise_penalty":False,"dump_beam":"","block_ngram_repeat":0,"ignore_when_blocking":[],"replace_unk":True,"phrase_table":"","data_type":"text","verbose":False,"report_bleu":False,"report_rouge":False,"report_time":False,"seed":829,"shard_size":0}
 
 
 def _load_model(name):
@@ -134,7 +134,7 @@ def _give_model(name):
 def _split_words(words):
 	return [" ".join(x.lower()) for x in words]
 
-def call_onmt(words, model_name, n_best=10):
+def call_onmt(words, model_name, n_best=5):
 	#Adapted code from OpenNMT translate.py
 
 	stream = fake_stream()
@@ -151,14 +151,14 @@ def call_onmt(words, model_name, n_best=10):
 		t.translate(
 			src=src_shard,
 			tgt=tgt_shard,
-			src_dir=opt.src_dir,
+			#src_dir=opt.src_dir,
 			batch_size=opt.batch_size,
 			attn_debug=opt.attn_debug
 			)
 	res = _parse_fake_stream(stream, n_best)
 	return res
 
-def _normalize(words, model_name, n_best=10, dictionary=None, all_candidates=True, correct_spelling_cache=True):
+def _normalize(words, model_name, n_best=5, dictionary=None, all_candidates=True, correct_spelling_cache=True):
 	res = call_onmt(_split_words(words), model_name, n_best=n_best)
 	if dictionary is None:
 		dictionary = wiktionary	
