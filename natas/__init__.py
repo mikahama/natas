@@ -22,5 +22,5 @@ def ocr_correct_words(words, n_best=5, dictionary=None, all_candidates=True, hyb
 	else:
 		return norms
 
-def is_correctly_spelled(word, dictionary=wiktionary, cache=True):
+def is_correctly_spelled(word, dictionary=None, cache=True):
 	return _is_in_dictionary(word.lower(), dictionary, _get_spacy(), cache)

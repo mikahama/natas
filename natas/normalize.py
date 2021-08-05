@@ -7,11 +7,18 @@ import configargparse as cfargparse
 import spacy
 import os
 
-try:
-	wiktionary = set([x.lower() for x in json_load(script_path("wiktionary_lemmas.json"))])
-except:
-	print("run python -m natas.download")
-	wiktionary = []
+
+wiktionary = None
+
+def load_wiktionary():
+	global wiktionary
+	if wiktionary is not None:
+		return
+	try:
+		wiktionary = set([x.lower() for x in json_load(script_path("wiktionary_lemmas.json"))])
+	except:
+		print("run python -m natas.download")
+		wiktionary = []
 
 is_in_data_cache = {"ceec_eng":{}, "ocr_fin":{}}
 
@@ -39,6 +46,9 @@ def split_corpus(f, shard_size):
 models = {}
 
 def is_in_dictionary(word, correct_lemmas, spacy_nlp, cache=True, cache_name="ceec_eng", lemmatize=True):
+	if correct_lemmas is None:
+		load_wiktionary()
+		correct_lemmas = wiktionary
 	if cache and word in is_in_data_cache:
 		return is_in_data_cache["ceec_eng"][word]
 	if word in correct_lemmas:
@@ -161,6 +171,7 @@ def call_onmt(words, model_name, n_best=5):
 def _normalize(words, model_name, n_best=5, dictionary=None, all_candidates=True, correct_spelling_cache=True):
 	res = call_onmt(_split_words(words), model_name, n_best=n_best)
 	if dictionary is None:
+		load_wiktionary()
 		dictionary = wiktionary	
 	return _dict_filter(res, dictionary,all_candidates=all_candidates, correct_spelling_cache=correct_spelling_cache)
 

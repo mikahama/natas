@@ -1,7 +1,8 @@
-from .normalize import is_in_dictionary, wiktionary, _get_spacy
+from .normalize import is_in_dictionary, wiktionary, _get_spacy, load_wiktionary
 import distance
 from collections import defaultdict
 
+load_wiktionary()
 
 def get_min_distance(word, words):
 	min = 2000000
