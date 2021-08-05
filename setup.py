@@ -37,7 +37,7 @@ setup(
     author_email='mika@rootroo.com',
 
     # Choose your license
-    license='Apache License, Version 2.0',
+    license='Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License',
 
     # See https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
