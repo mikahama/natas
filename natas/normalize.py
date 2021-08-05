@@ -116,7 +116,7 @@ def _chunks(l, n):
     n = max(1, n)
     return [l[i:i+n] for i in range(0, len(l), n)]
 
-def _parse_fake_stream(stream,n_best=5):
+def _parse_fake_stream(stream,n_best=10):
 	parts = stream.get_lines()
 	k = n_best + 1
 	del parts[k-1::k]
@@ -124,8 +124,8 @@ def _parse_fake_stream(stream,n_best=5):
 
 
 
-def _default_kwargs(words=None,n_best=5):
-	return {"tgt_prefix":False,"fp32":False,"int8":False, "ban_unk_token":False, "random_sampling_topp":1.0,"avg_raw_probs":False,"batch_size":30,"attn_debug":False,"src":words,"tgt":None,"alpha":0.0,"beta":-0.0,"length_penalty":"none","coverage_penalty":"none","gpu":-1,"n_best":n_best,"min_length":0,"max_length":100,"ratio":-0.0,"beam_size":5,"random_sampling_topk":-1,"random_sampling_temp":1.0,"stepwise_penalty":False,"dump_beam":"","block_ngram_repeat":0,"ignore_when_blocking":[],"replace_unk":True,"phrase_table":"","data_type":"text","verbose":False,"report_bleu":False,"report_rouge":False,"report_time":False,"seed":829,"shard_size":0}
+def _default_kwargs(words=None,n_best=10):
+	return {"tgt_prefix":False,"fp32":False,"int8":False, "ban_unk_token":False, "random_sampling_topp":0.0,"avg_raw_probs":False,"batch_size":30,"attn_debug":False,"src":words,"tgt":None,"alpha":0.0,"beta":-0.0,"length_penalty":"none","coverage_penalty":"none","gpu":-1,"n_best":n_best,"min_length":0,"max_length":100,"ratio":-0.0,"beam_size":5,"random_sampling_topk":0,"random_sampling_temp":1.0,"stepwise_penalty":False,"dump_beam":"","block_ngram_repeat":0,"ignore_when_blocking":[],"replace_unk":True,"phrase_table":"","data_type":"text","verbose":False,"report_bleu":False,"report_rouge":False,"report_time":False,"seed":829,"shard_size":0}
 
 
 def _load_model(name):
@@ -144,7 +144,7 @@ def _give_model(name):
 def _split_words(words):
 	return [" ".join(x.lower()) for x in words]
 
-def call_onmt(words, model_name, n_best=5):
+def call_onmt(words, model_name, n_best=10):
 	#Adapted code from OpenNMT translate.py
 
 	stream = fake_stream()
@@ -152,7 +152,6 @@ def call_onmt(words, model_name, n_best=5):
 	opt = opennmt_opts("", **_default_kwargs(words,n_best))
 	scorer = GNMTGlobalScorer.from_opt(opt)
 	t = Translator.from_opt(model, fields, opt, model_opt, global_scorer=scorer, out_file=stream, report_score=False)
-	
 	src_shards = split_corpus(opt.src, opt.shard_size)
 	tgt_shards = split_corpus(opt.tgt, opt.shard_size) \
 		if opt.tgt is not None else repeat(None)
