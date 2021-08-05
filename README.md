@@ -2,7 +2,7 @@
 
 This library will have methods for processing historical English corpora, especially for studying neologisms. The first functionalities to be released relate to normalization of historical spelling and OCR post-correction. This library is maintained by [Mika Hämäläinen](https://mikakalevi.com).
 
-**NOTE: The normalization methods depend on Spacy, which takes some time to load. If you want to speed this up, you can change the Spacy model in use**
+The normalization methods use Spacy for lemmatization, but they are not based on Spacy (regardless of whatever some ignorant people say online).
 
 ## Installation
 
