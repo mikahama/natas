@@ -1,5 +1,7 @@
 # NATAS
 
+[![Downloads](https://pepy.tech/badge/natas)](https://pepy.tech/project/natas)
+
 ![CC BY NC ND](https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png)
 
 This library has methods for processing historical English corpora, especially for studying neologisms. The first functionalities  relate to normalization of historical spelling and OCR post-correction. This library is maintained by [Mika Hämäläinen](https://mikakalevi.com).
