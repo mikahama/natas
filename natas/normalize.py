@@ -75,12 +75,12 @@ def is_in_dictionary(word, correct_lemmas, spacy_nlp, cache=True, cache_name="ce
 def _dict_filter(results, dictionary, all_candidates=True, correct_spelling_cache=True):
 	output = []
 	nlp = _get_spacy()
-	for word in results:
+	for word, score_set in zip(results[0], results[1]):
 		cor = []
-		for candidate in word:
+		for candidate, score in zip(word, score_set):
 			candidate = candidate.replace(" ", "")
 			if is_in_dictionary(candidate, dictionary, nlp, correct_spelling_cache):
-				cor.append(candidate)
+				cor.append((candidate, score))
 				if not all_candidates:
 					break
 		output.append(cor)
@@ -97,6 +97,7 @@ class fake_stream(object):
 	"""docstring for fake_stream"""
 	def __init__(self):
 		self.lines = []
+		self.scores = []
 
 	def write(self, line):
 		self.lines.append(line)
@@ -109,20 +110,24 @@ class fake_stream(object):
 	def __repr__(self):
 		return "\n".join(self.lines)
 
+	def load_scores(self, translated):
+		self.scores = [[score.item() for score in score_set] for score_set in translated[0]]
+
 	def get_lines(self):
 		return str(self).split("\n")
+
+	def get_scores(self):
+		return self.scores
 
 def _chunks(l, n):
     n = max(1, n)
     return [l[i:i+n] for i in range(0, len(l), n)]
 
-def _parse_fake_stream(stream,n_best=10):
+def _parse_fake_stream(stream, n_best=10):
 	parts = stream.get_lines()
 	k = n_best + 1
 	del parts[k-1::k]
-	return _chunks(parts,n_best)
-
-
+	return _chunks(parts, n_best)
 
 def _default_kwargs(words=None,n_best=10):
 	return {"tgt_prefix":False,"fp32":False,"int8":False, "ban_unk_token":False, "random_sampling_topp":0.0,"avg_raw_probs":False,"batch_size":30,"attn_debug":False,"src":words,"tgt":None,"alpha":0.0,"beta":-0.0,"length_penalty":"none","coverage_penalty":"none","gpu":-1,"n_best":n_best,"min_length":0,"max_length":100,"ratio":-0.0,"beam_size":5,"random_sampling_topk":0,"random_sampling_temp":1.0,"stepwise_penalty":False,"dump_beam":"","block_ngram_repeat":0,"ignore_when_blocking":[],"replace_unk":True,"phrase_table":"","data_type":"text","verbose":False,"report_bleu":False,"report_rouge":False,"report_time":False,"seed":829,"shard_size":0}
@@ -149,7 +154,7 @@ def call_onmt(words, model_name, n_best=10):
 
 	stream = fake_stream()
 	fields, model, model_opt = _give_model(model_name)
-	opt = opennmt_opts("", **_default_kwargs(words,n_best))
+	opt = opennmt_opts("", **_default_kwargs(words, n_best))
 	scorer = GNMTGlobalScorer.from_opt(opt)
 	t = Translator.from_opt(model, fields, opt, model_opt, global_scorer=scorer, out_file=stream, report_score=False)
 	src_shards = split_corpus(opt.src, opt.shard_size)
@@ -157,21 +162,28 @@ def call_onmt(words, model_name, n_best=10):
 		if opt.tgt is not None else repeat(None)
 	shard_pairs = zip(src_shards, tgt_shards)
 	for i, (src_shard, tgt_shard) in enumerate(shard_pairs):
-		t.translate(
-			src=src_shard,
-			tgt=tgt_shard,
-			#src_dir=opt.src_dir,
-			batch_size=opt.batch_size,
-			attn_debug=opt.attn_debug
-			)
-	res = _parse_fake_stream(stream, n_best)
+		translated = t.translate(
+						src=src_shard,
+						tgt=tgt_shard,
+						#src_dir=opt.batch_size,
+						batch_size=opt.batch_size,
+						attn_debug=opt.attn_debug
+						)
+		stream.load_scores(translated)
+	chunks = _parse_fake_stream(stream, n_best)
+	scores = stream.get_scores()
+	res = (chunks, scores)
 	return res
 
-def _normalize(words, model_name, n_best=5, dictionary=None, all_candidates=True, correct_spelling_cache=True):
+def _normalize(words, model_name, n_best=5, dictionary=None, all_candidates=True, correct_spelling_cache=True, return_scores=False):
 	res = call_onmt(_split_words(words), model_name, n_best=n_best)
 	if dictionary is None:
 		load_wiktionary()
-		dictionary = wiktionary	
-	return _dict_filter(res, dictionary,all_candidates=all_candidates, correct_spelling_cache=correct_spelling_cache)
-
+		dictionary = wiktionary
+	res = _dict_filter(res, dictionary, all_candidates=all_candidates, correct_spelling_cache=correct_spelling_cache)
+	if return_scores is True:
+		return res
+	else:
+		res = [[candidate[0] for candidate in candidate_list] for candidate_list in res]
+		return res
 
