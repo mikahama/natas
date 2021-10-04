@@ -29,7 +29,7 @@ Possible keyword arguments are n_best=10, dictionary=None, all_candidates=True, 
 - *dictionary* sets a custom dictionary to be used to filter the NMT output (see more in the next section)
 - *all_candidates*, if False, the method will return only the topmost normalization candidate (this will improve the speed of the method)
 - *correct_spelling_cache*, used only when checking if a candidate word is correctly spelled. Set this to False if you are testing with multiple *dictionaries*.
-- *return_scores*, if True, returns the model's predictions scores for example [['secret', -1.0969021320343018], ['secrete', -4.121032238006592]]
+- *return_scores*, if True, returns the model's predictions scores together with the normalization candidates. For example [['secret', -1.0969021320343018], ['secrete', -4.121032238006592]]
 
 ## OCR post correction
 
