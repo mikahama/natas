@@ -1,11 +1,11 @@
-from natas import ocr_builder
+#from natas import ocr_builder
 from mikatools import *
 #from gensim.models import Word2Vec
 #from gensim.models.keyedvectors import Word2VecKeyedVectors
 import natas
 
-print(natas.is_correctly_spelled("cat"))
-print(natas.normalize_words(["seacreat", "wiþe"], n_best=5))
+#print(natas.is_correctly_spelled("cat"))
+print(natas.normalize_words(["seacreat", "wiþe"], n_best=5, return_scores=True))
 print(natas.ocr_correct_words(["paft", "friendlhip"]))
 
 

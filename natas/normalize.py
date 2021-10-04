@@ -75,12 +75,20 @@ def is_in_dictionary(word, correct_lemmas, spacy_nlp, cache=True, cache_name="ce
 def _dict_filter(results, dictionary, all_candidates=True, correct_spelling_cache=True):
 	output = []
 	nlp = _get_spacy()
-	for word, score_set in zip(results[0], results[1]):
+
+	for word in results:
 		cor = []
-		for candidate, score in zip(word, score_set):
+		for candidate in word:
+			score = None
+			if isinstance(candidate, tuple):
+				score = candidate[1]
+				candidate = candidate[0]
 			candidate = candidate.replace(" ", "")
 			if is_in_dictionary(candidate, dictionary, nlp, correct_spelling_cache):
-				cor.append((candidate, score))
+				if score is not None:
+					cor.append([candidate, score])
+				else:
+					cor.append(candidate)
 				if not all_candidates:
 					break
 		output.append(cor)
@@ -149,7 +157,7 @@ def _give_model(name):
 def _split_words(words):
 	return [" ".join(x.lower()) for x in words]
 
-def call_onmt(words, model_name, n_best=10):
+def call_onmt(words, model_name, n_best=10, return_scores=False):
 	#Adapted code from OpenNMT translate.py
 
 	stream = fake_stream()
@@ -172,18 +180,17 @@ def call_onmt(words, model_name, n_best=10):
 		stream.load_scores(translated)
 	chunks = _parse_fake_stream(stream, n_best)
 	scores = stream.get_scores()
-	res = (chunks, scores)
-	return res
+	if return_scores is True:
+		return [list(zip(c,s)) for c, s in zip(chunks, scores)]
+	else:
+		return chunks
 
 def _normalize(words, model_name, n_best=5, dictionary=None, all_candidates=True, correct_spelling_cache=True, return_scores=False):
-	res = call_onmt(_split_words(words), model_name, n_best=n_best)
+	res = call_onmt(_split_words(words), model_name, n_best=n_best, return_scores=return_scores)
 	if dictionary is None:
 		load_wiktionary()
 		dictionary = wiktionary
 	res = _dict_filter(res, dictionary, all_candidates=all_candidates, correct_spelling_cache=correct_spelling_cache)
-	if return_scores is True:
-		return res
-	else:
-		res = [[candidate[0] for candidate in candidate_list] for candidate_list in res]
-		return res
+	return res
+
 
