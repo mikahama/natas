@@ -2,3 +2,4 @@ natas.egg-info
 build/*
 dist/*
 natas/__pycache__/*
+*.DS_Store

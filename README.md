@@ -24,11 +24,12 @@ For a list of non-modern spelling variants, the tool can produce an ordered list
     natas.normalize_words(["seacreat", "wiþe"])
     >> [['secret', 'secrete'], ['with', 'withe', 'wide', 'white', 'way']]
 
-Possible keyword arguments are n_best=10, dictionary=None, all_candidates=True, correct_spelling_cache=True. 
+Possible keyword arguments are n_best=10, dictionary=None, all_candidates=True, correct_spelling_cache=True, return_scores=False. 
 - *n_best* sets the number of candidates the NMT will output
 - *dictionary* sets a custom dictionary to be used to filter the NMT output (see more in the next section)
 - *all_candidates*, if False, the method will return only the topmost normalization candidate (this will improve the speed of the method)
 - *correct_spelling_cache*, used only when checking if a candidate word is correctly spelled. Set this to False if you are testing with multiple *dictionaries*.
+- *return_scores*, if True, returns the model's predictions scores for example [['secret', -1.0969021320343018], ['secrete', -4.121032238006592]]
 
 ## OCR post correction
 
