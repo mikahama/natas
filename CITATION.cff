@@ -1,0 +1,38 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Natas
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Mika
+    family-names: Hämäläinen
+  - given-names: Simon
+    family-names: Hengchen
+  - given-names: Tyler
+    family-names: Shoemaker
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.5548175
+    description: Zenodo
+repository-code: 'https://github.com/mikahama/natas'
+date-released: '2021-10-04'
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Hämäläinen"
+    given-names: "Mika"
+  - family-names: "Säily"
+    given-names: "Tanja"
+  - family-names: "Rueter"
+    given-names: "Jack"
+  - family-names: "Tiedemann"
+    given-names: "Jörg"
+  - family-names: "Mäkelä"
+    given-names: "Eetu"
+  journal: "Proceedings of the 3rd Joint SIGHUM Workshop on Computational Linguistics for Cultural Heritage, Social Sciences, Humanities and Literature"
+  title: "Revisiting NMT for Normalization of Early English Letters."
+  year: 2019
