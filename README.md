@@ -105,14 +105,6 @@ By default, caching is enabled. If you want to use the method with multiple diff
     natas.is_correctly_spelled("cat") #The result will be served from the cache
     natas.is_correctly_spelled("cat", cache=False) #The word will be looked up again
 
-# Business solutions
-
-
-<img src="https://rootroo.com/cropped-logo-01-png/" alt="Rootroo logo" width="128px" height="128px">
-
-Non-standard historical or OCRed data can be a mess to deal with when you want to squeeze all the juice out of your corpora. Let us help! [Rootroo offers consulting related to non-standard data](https://rootroo.com/). We have a strong academic background in the state-of-the-art AI solutions for every NLP need. Just contact us, we won't bite.
-
-
 # Cite
 
 If you use the library, please cite one of the following publications depending on whether you used it for normalization or OCR correction.
