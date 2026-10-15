@@ -1,12 +1,9 @@
 from mikatools import script_path, json_load
-from onmt.translate.translator import Translator
-from onmt.model_builder import load_test_model
-from onmt.translate import GNMTGlobalScorer
 from itertools import islice, repeat
 import configargparse as cfargparse
 import spacy
 import os
-
+from onmt_runner import Translator
 
 wiktionary = None
 
@@ -80,7 +77,7 @@ def _dict_filter(results, dictionary, all_candidates=True, correct_spelling_cach
 		cor = []
 		for candidate in word:
 			score = None
-			if isinstance(candidate, tuple):
+			if isinstance(candidate, list):
 				score = candidate[1]
 				candidate = candidate[0]
 			candidate = candidate.replace(" ", "")
@@ -145,8 +142,7 @@ def _load_model(name):
 	model_path = script_path("models/" + name)
 	if not os.path.exists(model_path):
 		model_path = name
-	opt = opennmt_opts(model_path, **_default_kwargs())
-	m = load_test_model(opt)
+	m = Translator.load(model_path)
 	models[name] = m
 
 def _give_model(name):
@@ -158,32 +154,17 @@ def _split_words(words):
 	return [" ".join(x.lower()) for x in words]
 
 def call_onmt(words, model_name, n_best=10, return_scores=False):
-	#Adapted code from OpenNMT translate.py
-
-	stream = fake_stream()
-	fields, model, model_opt = _give_model(model_name)
-	opt = opennmt_opts("", **_default_kwargs(words, n_best))
-	scorer = GNMTGlobalScorer.from_opt(opt)
-	t = Translator.from_opt(model, fields, opt, model_opt, global_scorer=scorer, out_file=stream, report_score=False)
-	src_shards = split_corpus(opt.src, opt.shard_size)
-	tgt_shards = split_corpus(opt.tgt, opt.shard_size) \
-		if opt.tgt is not None else repeat(None)
-	shard_pairs = zip(src_shards, tgt_shards)
-	for i, (src_shard, tgt_shard) in enumerate(shard_pairs):
-		translated = t.translate(
-						src=src_shard,
-						tgt=tgt_shard,
-						#src_dir=opt.batch_size,
-						batch_size=opt.batch_size,
-						attn_debug=opt.attn_debug
-						)
-		stream.load_scores(translated)
-	chunks = _parse_fake_stream(stream, n_best)
-	scores = stream.get_scores()
-	if return_scores is True:
-		return [list(zip(c,s)) for c, s in zip(chunks, scores)]
-	else:
-		return chunks
+	model = _give_model(model_name)
+	tss = model.translate_many(words, n_best=n_best, return_scores=return_scores)
+	res = []
+	for ts in tss:
+		if not isinstance(ts, list):
+			ts = [ts]
+		if return_scores is True:
+			res.append([[t.text, t.score] for t in ts])
+		else:
+			res.append(ts)
+	return res
 
 def _normalize(words, model_name, n_best=5, dictionary=None, all_candidates=True, correct_spelling_cache=True, return_scores=False):
 	res = call_onmt(_split_words(words), model_name, n_best=n_best, return_scores=return_scores)

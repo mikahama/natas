@@ -23,7 +23,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.2.1',
+    version='2.0.0',
 
     description='Python library for processing historical English',
     long_description=long_description,
@@ -69,7 +69,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=["configargparse","distance", "spacy>=2.1.4", "mikatools>=0.0.6","OpenNMT-py==2.1.2"],
+    install_requires=["configargparse","distance", "spacy>=2.1.4", "mikatools>=0.0.6","onmt-runner"],
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
     # for example:
